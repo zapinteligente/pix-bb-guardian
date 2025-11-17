@@ -1,1 +1,7 @@
 project_id = "vgdjygvzyvogkrkorhjg"
+
+[functions.generate-bb-token]
+verify_jwt = false
+
+[functions.get-pix-received]
+verify_jwt = false
