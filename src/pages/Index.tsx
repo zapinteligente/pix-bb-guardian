@@ -4,6 +4,7 @@ import { StatsCards } from "@/components/StatsCards";
 import { DateFilters } from "@/components/DateFilters";
 import { PixList } from "@/components/PixList";
 import { EnvironmentToggle } from "@/components/EnvironmentToggle";
+import { ConnectionStatus } from "@/components/ConnectionStatus";
 import { format, subDays, startOfDay, endOfDay } from "date-fns";
 
 export type DateFilterType = "today" | "yesterday" | "last3days" | "custom";
@@ -14,6 +15,9 @@ const Index = () => {
   const [customStartDate, setCustomStartDate] = useState<Date | undefined>();
   const [customEndDate, setCustomEndDate] = useState<Date | undefined>();
   const [isLoading, setIsLoading] = useState(false);
+  const [connectionStatus, setConnectionStatus] = useState<"connected" | "disconnected" | "error">("disconnected");
+  const [lastSync, setLastSync] = useState<Date | undefined>();
+  const [errorMessage, setErrorMessage] = useState<string | undefined>();
 
   const getDateRange = () => {
     const now = new Date();
@@ -60,9 +64,16 @@ const Index = () => {
       
       <main className="container mx-auto px-4 py-8 space-y-8">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <div>
-            <h2 className="text-3xl font-bold text-foreground">Dashboard de PIX</h2>
-            <p className="text-muted-foreground mt-1">Acompanhe seus recebimentos em tempo real</p>
+          <div className="space-y-3">
+            <div>
+              <h2 className="text-3xl font-bold text-foreground">Dashboard de PIX</h2>
+              <p className="text-muted-foreground mt-1">Acompanhe seus recebimentos em tempo real</p>
+            </div>
+            <ConnectionStatus 
+              status={connectionStatus}
+              lastSync={lastSync}
+              errorMessage={errorMessage}
+            />
           </div>
           <EnvironmentToggle 
             environment={environment} 
@@ -90,6 +101,11 @@ const Index = () => {
             environment={environment}
             dateRange={getDateRange()}
             onLoadingChange={setIsLoading}
+            onConnectionStatusChange={(status, lastSync, error) => {
+              setConnectionStatus(status);
+              setLastSync(lastSync);
+              setErrorMessage(error);
+            }}
           />
         </div>
       </main>
