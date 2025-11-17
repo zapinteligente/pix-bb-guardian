@@ -38,7 +38,10 @@ serve(async (req) => {
     // Codifica as credenciais em Base64
     const credentials = btoa(`${clientId}:${clientSecret}`);
 
-    const response = await fetch(`${oauthUrl}/oauth/token`, {
+    // Parâmetros devem estar na query string conforme documentação do BB
+    const tokenUrl = `${oauthUrl}/oauth/token?gw-dev-app-key=${developerAppKey}`;
+
+    const response = await fetch(tokenUrl, {
       method: 'POST',
       headers: {
         'Authorization': `Basic ${credentials}`,
