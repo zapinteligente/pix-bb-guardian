@@ -25,12 +25,12 @@ serve(async (req) => {
 
     // URLs corretas do Banco do Brasil
     const oauthUrl = environment === 'sandbox'
-      ? 'https://oauth.hm.bb.com.br'
-      : 'https://oauth.bb.com.br';
+      ? 'https://oauth.sandbox.bb.com.br'
+      : 'https://oauth.hm.bb.com.br';
 
     const apiUrl = environment === 'sandbox'
-      ? 'https://api.hm.bb.com.br'
-      : 'https://api.bb.com.br';
+      ? 'https://api.sandbox.bb.com.br'
+      : 'https://api.hm.bb.com.br';
 
     const credentials = btoa(`${clientId}:${clientSecret}`);
 

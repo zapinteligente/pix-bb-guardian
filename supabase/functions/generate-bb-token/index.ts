@@ -29,8 +29,8 @@ serve(async (req) => {
 
     // URL correta do OAuth2 do Banco do Brasil
     const oauthUrl = environment === 'sandbox'
-      ? 'https://oauth.hm.bb.com.br'
-      : 'https://oauth.bb.com.br';
+      ? 'https://oauth.sandbox.bb.com.br'
+      : 'https://oauth.hm.bb.com.br';
 
     console.log(`Gerando token para ambiente: ${environment}`);
     console.log(`URL: ${oauthUrl}/oauth/token`);
