@@ -38,7 +38,10 @@ serve(async (req) => {
     console.log(`URL OAuth: ${oauthUrl}/oauth/token`);
     console.log(`Client ID: ${clientId.substring(0, 8)}...`);
     
-    const tokenResponse = await fetch(`${oauthUrl}/oauth/token`, {
+    // Parâmetros devem estar na query string conforme documentação do BB
+    const tokenUrl = `${oauthUrl}/oauth/token?gw-dev-app-key=${developerAppKey}`;
+    
+    const tokenResponse = await fetch(tokenUrl, {
       method: 'POST',
       headers: {
         'Authorization': `Basic ${credentials}`,
