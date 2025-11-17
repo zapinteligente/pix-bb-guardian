@@ -21,35 +21,35 @@ const Index = () => {
     switch (dateFilter) {
       case "today":
         return {
-          startDate: format(startOfDay(now), "yyyy-MM-dd'T'HH:mm:ss"),
-          endDate: format(endOfDay(now), "yyyy-MM-dd'T'HH:mm:ss")
+          startDate: format(startOfDay(now), "yyyy-MM-dd'T'HH:mm:ssXXX"),
+          endDate: format(endOfDay(now), "yyyy-MM-dd'T'HH:mm:ssXXX")
         };
       case "yesterday":
         const yesterday = subDays(now, 1);
         return {
-          startDate: format(startOfDay(yesterday), "yyyy-MM-dd'T'HH:mm:ss"),
-          endDate: format(endOfDay(yesterday), "yyyy-MM-dd'T'HH:mm:ss")
+          startDate: format(startOfDay(yesterday), "yyyy-MM-dd'T'HH:mm:ssXXX"),
+          endDate: format(endOfDay(yesterday), "yyyy-MM-dd'T'HH:mm:ssXXX")
         };
       case "last3days":
         return {
-          startDate: format(startOfDay(subDays(now, 3)), "yyyy-MM-dd'T'HH:mm:ss"),
-          endDate: format(endOfDay(now), "yyyy-MM-dd'T'HH:mm:ss")
+          startDate: format(startOfDay(subDays(now, 3)), "yyyy-MM-dd'T'HH:mm:ssXXX"),
+          endDate: format(endOfDay(now), "yyyy-MM-dd'T'HH:mm:ssXXX")
         };
       case "custom":
         if (!customStartDate || !customEndDate) {
           return {
-            startDate: format(startOfDay(now), "yyyy-MM-dd'T'HH:mm:ss"),
-            endDate: format(endOfDay(now), "yyyy-MM-dd'T'HH:mm:ss")
+            startDate: format(startOfDay(now), "yyyy-MM-dd'T'HH:mm:ssXXX"),
+            endDate: format(endOfDay(now), "yyyy-MM-dd'T'HH:mm:ssXXX")
           };
         }
         return {
-          startDate: format(startOfDay(customStartDate), "yyyy-MM-dd'T'HH:mm:ss"),
-          endDate: format(endOfDay(customEndDate), "yyyy-MM-dd'T'HH:mm:ss")
+          startDate: format(startOfDay(customStartDate), "yyyy-MM-dd'T'HH:mm:ssXXX"),
+          endDate: format(endOfDay(customEndDate), "yyyy-MM-dd'T'HH:mm:ssXXX")
         };
       default:
         return {
-          startDate: format(startOfDay(now), "yyyy-MM-dd'T'HH:mm:ss"),
-          endDate: format(endOfDay(now), "yyyy-MM-dd'T'HH:mm:ss")
+          startDate: format(startOfDay(now), "yyyy-MM-dd'T'HH:mm:ssXXX"),
+          endDate: format(endOfDay(now), "yyyy-MM-dd'T'HH:mm:ssXXX")
         };
     }
   };
