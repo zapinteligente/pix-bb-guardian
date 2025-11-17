@@ -3,14 +3,13 @@ import { DashboardHeader } from "@/components/DashboardHeader";
 import { StatsCards } from "@/components/StatsCards";
 import { DateFilters } from "@/components/DateFilters";
 import { PixList } from "@/components/PixList";
-import { EnvironmentToggle } from "@/components/EnvironmentToggle";
 import { ConnectionStatus } from "@/components/ConnectionStatus";
 import { format, subDays, startOfDay, endOfDay } from "date-fns";
 
 export type DateFilterType = "today" | "yesterday" | "last3days" | "custom";
 
 const Index = () => {
-  const [environment, setEnvironment] = useState<"sandbox" | "production">("sandbox");
+  const environment = "production"; // Fixado para produção
   const [dateFilter, setDateFilter] = useState<DateFilterType>("today");
   const [customStartDate, setCustomStartDate] = useState<Date | undefined>();
   const [customEndDate, setCustomEndDate] = useState<Date | undefined>();
@@ -64,10 +63,10 @@ const Index = () => {
       
       <main className="container mx-auto px-4 py-8 space-y-8">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <div className="space-y-3">
+          <div className="space-y-3 flex-1">
             <div>
               <h2 className="text-3xl font-bold text-foreground">Dashboard de PIX</h2>
-              <p className="text-muted-foreground mt-1">Acompanhe seus recebimentos em tempo real</p>
+              <p className="text-muted-foreground mt-1">Acompanhe seus recebimentos em tempo real - Ambiente de Produção</p>
             </div>
             <ConnectionStatus 
               status={connectionStatus}
@@ -75,10 +74,6 @@ const Index = () => {
               errorMessage={errorMessage}
             />
           </div>
-          <EnvironmentToggle 
-            environment={environment} 
-            onToggle={setEnvironment}
-          />
         </div>
 
         <StatsCards 
