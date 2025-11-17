@@ -27,24 +27,26 @@ serve(async (req) => {
       throw new Error('Credenciais do Banco do Brasil não configuradas');
     }
 
-    // URL base de acordo com o ambiente
-    const baseUrl = environment === 'sandbox'
-      ? 'https://api.sandbox.bb.com.br'
-      : 'https://api.bb.com.br';
+    // URL correta do OAuth2 do Banco do Brasil
+    const oauthUrl = environment === 'sandbox'
+      ? 'https://oauth.hm.bb.com.br'
+      : 'https://oauth.bb.com.br';
 
     console.log(`Gerando token para ambiente: ${environment}`);
-    console.log(`URL: ${baseUrl}/oauth/token`);
+    console.log(`URL: ${oauthUrl}/oauth/token`);
 
     // Codifica as credenciais em Base64
     const credentials = btoa(`${clientId}:${clientSecret}`);
 
-    const response = await fetch(`${baseUrl}/oauth/token`, {
+    const response = await fetch(`${oauthUrl}/oauth/token`, {
       method: 'POST',
       headers: {
         'Authorization': `Basic ${credentials}`,
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: 'grant_type=client_credentials&scope=pix.read',
+      body: new URLSearchParams({
+        grant_type: 'client_credentials',
+      }).toString(),
     });
 
     if (!response.ok) {
