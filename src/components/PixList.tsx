@@ -12,6 +12,11 @@ interface PixListProps {
   environment: "sandbox" | "production";
   dateRange: { startDate: string; endDate: string };
   onLoadingChange: (loading: boolean) => void;
+  onConnectionStatusChange?: (
+    status: "connected" | "disconnected" | "error",
+    lastSync?: Date,
+    error?: string
+  ) => void;
 }
 
 interface PixTransaction {
@@ -26,7 +31,7 @@ interface PixTransaction {
   };
 }
 
-export const PixList = ({ environment, dateRange, onLoadingChange }: PixListProps) => {
+export const PixList = ({ environment, dateRange, onLoadingChange, onConnectionStatusChange }: PixListProps) => {
   const [transactions, setTransactions] = useState<PixTransaction[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -50,14 +55,18 @@ export const PixList = ({ environment, dateRange, onLoadingChange }: PixListProp
       if (data?.pix && Array.isArray(data.pix)) {
         setTransactions(data.pix);
         toast.success(`${data.pix.length} PIX encontrados`);
+        onConnectionStatusChange?.("connected", new Date());
       } else {
         setTransactions([]);
         toast.info("Nenhum PIX encontrado no período");
+        onConnectionStatusChange?.("connected", new Date());
       }
     } catch (err: any) {
       console.error("Erro ao buscar PIX:", err);
-      setError(err.message || "Erro ao buscar transações PIX");
+      const errorMsg = err.message || "Erro ao buscar transações PIX";
+      setError(errorMsg);
       toast.error("Erro ao buscar transações");
+      onConnectionStatusChange?.("error", undefined, errorMsg);
     } finally {
       setIsLoading(false);
       onLoadingChange(false);
