@@ -23,19 +23,18 @@ serve(async (req) => {
       throw new Error('Credenciais do Banco do Brasil não configuradas');
     }
 
-    // URLs corretas do Banco do Brasil
+    // URL OAuth do Banco do Brasil
     const oauthUrl = environment === 'sandbox'
       ? 'https://oauth.sandbox.bb.com.br'
       : 'https://oauth.bb.com.br';
 
-   // URLs CORRETAS da API PIX com mTLS
-const apiUrl = environment === 'sandbox'
-  ? 'https://api-pix.hm.bb.com.br/pix/v2'
-  : 'https://api-pix.bb.com.br/pix/v2';
+    // URLs CORRETAS da API PIX com mTLS
+    const apiUrl = environment === 'sandbox'
+      ? 'https://api-pix.hm.bb.com.br/pix/v2'
+      : 'https://api-pix.bb.com.br/pix/v2';
 
-// Endpoint PIX correto
-const pixUrl = `${apiUrl}/pix`;
-
+    // Endpoint final PIX
+    const pixUrl = `${apiUrl}/pix`;
 
     const credentials = btoa(`${clientId}:${clientSecret}`);
 
@@ -69,16 +68,13 @@ const pixUrl = `${apiUrl}/pix`;
     console.log('Token obtido com sucesso');
     console.log(`Token expira em: ${tokenData.expires_in} segundos`);
 
-    // Agora busca os PIX recebidos
-    // Formato das datas: ISO 8601 (2024-01-01T00:00:00Z)
-    const pixUrl = `${apiUrl}/pix/v2/pix`;
-    
+    // Busca os PIX recebidos
     const params = new URLSearchParams({
       inicio: startDate,
       fim: endDate,
     });
 
-    console.log(`Consultando PIX: ${pixUrl}?${params.toString()}`);
+    console.log(`URL FINAL sendo chamada: ${pixUrl}?${params.toString()}`);
     console.log(`Usando gw-dev-app-key: ${developerAppKey.substring(0, 8)}...`);
 
     const pixResponse = await fetch(`${pixUrl}?${params.toString()}`, {
