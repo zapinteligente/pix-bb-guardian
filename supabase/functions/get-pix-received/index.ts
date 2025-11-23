@@ -28,10 +28,13 @@ serve(async (req) => {
       ? 'https://oauth.sandbox.bb.com.br'
       : 'https://oauth.bb.com.br';
 
-    // URLs PIX corretas com mTLS
+   // URLs CORRETAS da API PIX com mTLS
 const apiUrl = environment === 'sandbox'
   ? 'https://api-pix.hm.bb.com.br/pix/v2'
   : 'https://api-pix.bb.com.br/pix/v2';
+
+// Endpoint PIX correto
+const pixUrl = `${apiUrl}/pix`;
 
 
     const credentials = btoa(`${clientId}:${clientSecret}`);
